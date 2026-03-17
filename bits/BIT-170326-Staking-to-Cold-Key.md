@@ -19,10 +19,7 @@ Rework Staking and Child Hotkey (CHK) Staking to associate with the (singular) V
 
 ## Motivation
 
-The current structure is a Band-Aid on a Band-Aid. Validators currently have a "root" hotkey 
-(that does not run any code), with actual infrastructure operations split across a separate  
-hotkey for each subnet. Delegate stake is split between the root and subnet specific keys, 
-while CHK Stake is attached to each of the individual subnet keys. 
+The current structure is a Band-Aid on a Band-Aid. Validators currently have a "root" hotkey (that does not run any code), with actual infrastructure operations split across a separate hotkey for each subnet. Delegate stake is split between the root and subnet specific keys, while CHK Stake is attached to each of the individual subnet keys. 
 
 ## Specification
 
@@ -34,12 +31,7 @@ First Described in [Issue 1620](https://github.com/opentensor/subtensor/issues/1
 
 ## Rationale
 
-The current setup results in poor user experience, messy front ends, complicated reporting, 
-varied APYs (due to CHK Take only applying to stake on the subnet specific key), slow 
-adaptability in the event of validator technical issues, and incorrect reporting for the 
-upcoming governance features. The only players that benefit from the current mess are 
-CHK/Weight Copy Validators that benefit from having all of their weight focused on a single 
-key, while Infra Valis continue to suffer.
+The current setup results in poor user experience, messy front ends, complicated reporting, varied APYs (due to CHK Take only applying to stake on the subnet specific key), slow adaptability in the event of validator technical issues, and incorrect reporting for the upcoming governance features. The only players that benefit from the current mess are CHK/Weight Copy Validators that benefit from having all of their weight focused on a single key, while Infra Valis continue to suffer.
 
 ## Backwards Compatibility
 
@@ -49,9 +41,7 @@ b) Automated remapping of any staking attempts to a hotkey across to the correct
 
 ## Security Considerations
 
-To prevent abuse, it is imperative that either Hotkey Registrations be limited to one UID 
-per Subnet per Hotkey, or at the very least, limiting vTrust to only one hotkey per subnet
-per Cold key. The former is suggested as it eliminates more potential edge case scenarios.
+To prevent abuse, it is imperative that either Hotkey Registrations be limited to one UID per Subnet per Hotkey, or at the very least, limiting vTrust to only one hotkey per subnet per Cold key. The former is suggested as it eliminates more potential edge case scenarios.
 
 ## Copyright
 
