@@ -11,6 +11,8 @@
 - **Requires:** N/A
 - **Replaces:** N/A
 
+![BIT-170326 - Figure 01](https://raw.githubusercontent.com/CapriciousSage/bits/refs/heads/main/bits/BIT-170326-01.png)
+
 ## Abstract
 
 A short (~200 words) description of the issue being addressed and the proposed solution.
