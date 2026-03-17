@@ -11,48 +11,47 @@
 - **Requires:** N/A
 - **Replaces:** N/A
 
-![BIT-170326 - Figure 01](https://raw.githubusercontent.com/CapriciousSage/bits/refs/heads/main/bits/BIT-170326-01.png)
-
 ## Abstract
 
-A short (~200 words) description of the issue being addressed and the proposed solution.
+Rework Staking and Child Hotkey (CHK) Staking to associate with the (singular) Validator Cold Key / Identity, instead of split across the (up to 129 per Validator) Hotkeys.
+
+![BIT-170326 - Figure 01](https://raw.githubusercontent.com/CapriciousSage/bits/refs/heads/main/bits/BIT-170326-01.png)
 
 ## Motivation
 
-The motivation section should clearly explain why the existing protocol specification is
-inadequate to address the problem that the BIT solves. This is critical for BITs that want to
-change the Bittensor protocol. It should clearly explain why the solution outlined in the BIT
-is beneficial to the Bittensor ecosystem.
+The current structure is a Band-Aid on a Band-Aid. Validators currently have a "root" hotkey 
+(that does not run any code), with actual infrastructure operations split across a separate  
+hotkey for each subnet. Delegate stake is split between the root and subnet specific keys, 
+while CHK Stake is attached to each of the individual subnet keys. 
 
 ## Specification
 
-The technical specification should describe the syntax and semantics of any new feature or
-proposed change. The specification should be detailed enough to allow for implementation
-without needing to interpret the proposal’s intent.
+First Described in [Issue 1620](https://github.com/opentensor/subtensor/issues/1620), this process involves a few steps.
+- The technical implementation of associating Root, dTAO and CHK Stake with the Cold Key 
+- Coordinated global migration of all existing stake from Hotkeys to the Cold Key 
+- Restricting Hotkey Registration to one UID per Subnet per Cold Key
+- Coordinated Updates on Front End and Wallet Apps 
 
 ## Rationale
 
-This section describes why particular design decisions were made. It should address alternative
-designs and why they were not chosen, and should discuss the potential impact of the proposal
-on the existing system.
+The current setup results in poor user experience, messy front ends, complicated reporting, 
+varied APYs (due to CHK Take only applying to stake on the subnet specific key), slow 
+adaptability in the event of validator technical issues, and incorrect reporting for the 
+upcoming governance features. The only players that benefit from the current mess are 
+CHK/Weight Copy Validators that benefit from having all of their weight focused on a single 
+key, while Infra Valis continue to suffer.
 
 ## Backwards Compatibility
 
-All BITs that introduce backward incompatibilities must include a section describing these
-incompatibilities and their severity. The BIT must explain how the author proposes to deal with
-these incompatibilities. BIT submissions without a sufficient backward compatibility treatise
-may be rejected outright.
-
-## Reference Implementation (Optional)
-
-If applicable, include a link to a reference implementation that demonstrates the feasibility
-of the proposal. This implementation may be partial or fully complete.
+After the switch, there needs to be one of two backwards compatibility considerations:
+a) Clear error messages explaining that the user must stake to the Coldkey instead
+b) Automated remapping of any staking attempts to a hotkey across to the correct Coldkey  
 
 ## Security Considerations
 
-All BITs should consider the security implications of their proposals. This section should
-address potential attack vectors, vulnerabilities, and how the proposed changes affect the
-overall security of the Bittensor protocol.
+To prevent abuse, it is imperative that either Hotkey Registrations be limited to one UID 
+per Subnet per Hotkey, or at the very least, limiting vTrust to only one hotkey per subnet
+per Cold key. The former is suggested as it eliminates more potential edge case scenarios.
 
 ## Copyright
 
